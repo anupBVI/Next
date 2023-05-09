@@ -1,11 +1,11 @@
 import React from 'react'
 import * as style from "./Breadcrumb.style"
 
-const Breadcrumb = () => {
-    
+const Breadcrumb = ({crumbs}:any) => {
+
   return (
     <style.BreadCrumbs>
-      Breadcrumb
+      Home / {crumbs}
     </style.BreadCrumbs>
   )
 }

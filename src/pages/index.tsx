@@ -15,8 +15,7 @@ export default function Home() {
   return (
     <MainLayout>
       <div>
-        <br />
-        <br />
+        
         <Button primary label="Button" onClick={handleClick} lIcon />{" "}
         <Button secondary rounded label="Button" onClick={handleClick} rIcon />{" "}
         <Button tertiary curved label="no icon" onClick={handleClick} />{" "}

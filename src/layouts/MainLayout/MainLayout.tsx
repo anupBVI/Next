@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import CustomHead from "@/components/Head/Head";
 import { useRouter } from "next/router";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -25,9 +26,10 @@ const MainLayout = ({ children, noFooter }: LayoutProps) => {
       <CustomHead title={path !== "/" ? serviceName : "Home"} />
       <Navbar />
 
-      {
-
-      }
+      <Breadcrumb crumbs={serviceName}/>
+      {/* {
+      serviceName
+      } */}
       <main>{children}</main>
       {noFooter ? "" : <Footer />}
     </>

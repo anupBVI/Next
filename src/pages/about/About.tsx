@@ -8,8 +8,8 @@ import { FiArrowRight } from "react-icons/fi";
 const About = () => {
   return (
     <MainLayout noFooter={true}>
-      About page
-      <br /><br />
+    
+      
 
       <Button lIcon={<FiArrowRight/>} primary rounded label='Click me'  />
       { " "}

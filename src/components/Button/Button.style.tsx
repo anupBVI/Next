@@ -43,7 +43,4 @@ export const Button = styled.button<ButtonProps>`
         ? "#6f0f27"
         : "gray"};
   }
-
-  box-shadow:  5px 5px 10px #858585,
-             -5px -5px 10px #d9d9d9;
 `;

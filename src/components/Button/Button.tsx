@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import * as style from "./Button.style";
-import { ReactComponentElement } from "react";
 
 interface IButton {
   label: string;
   onClick?: () => void;
+  
   lIcon?: React.ReactNode;
   rIcon?: React.ReactNode;
 

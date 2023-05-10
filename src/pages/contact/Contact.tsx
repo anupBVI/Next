@@ -9,20 +9,11 @@ const Contact = () => {
     <MainLayout>
       Contact page
       <br />
-      <Accordion
-        titleSize={"14px"}
-        openIcon={<BsChevronDown />}
-        transform={"no"}
-        closeIcon={<BsChevronUp />}
-        title="Show Details"
-        padd={"0px"}
-        justify="any string"
-      >
-        <div>"offer.details"</div>
-       
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus adipisci error officia.</p>
-   
-      </Accordion>
+
+      <div className="container">
+        
+      </div>
+     
     </MainLayout>
   );
 };

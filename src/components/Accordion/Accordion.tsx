@@ -1,64 +1,48 @@
-import React, { ReactNode, useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import React, { ReactComponentElement } from "react";
+import * as style from "./Accordion.style";
 
-import * as style from "./Accordion.style"
+const { AHeader } = style;
 
-
-// Define types for Accordion props
-interface AccordionProps {
-  title: string;
-  children: ReactNode;
-  defaultOpen?: boolean;
-  titleBackground?: string;
-  padd?: string;
-  justify?: string;
-  openIcon?: ReactNode;
-  closeIcon?: ReactNode;
-  transform?: string;
-  titleSize?: string;
+interface IAccordion {
+  data: {
+    id: string;
+    title: string;
+    body: string | React.ReactNode
+    open?: boolean;
+  }[];
 }
-
-const Accordion: React.FC<AccordionProps> = ({
-  title,
-  children,
-  padd,
-  titleBackground,
-  defaultOpen = false,
-  justify,
-  openIcon,
-  closeIcon,
-  transform,
-  titleSize,
-}) => {
-  const {AccordionContent , AccordionIcon , AccordionTitle , AccordionWrapper} = style
-  const [isOpen, setIsOpen] = useState(defaultOpen);
-
+const Accordion = (props: IAccordion) => {
   return (
-    <AccordionWrapper>
-      <AccordionTitle
-        titleSize={titleSize}
-        titleBackground={titleBackground}
-        padd={padd}
-        justify={justify}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {title}
-        <AccordionIcon transform={transform} isOpen={isOpen}>
-          {isOpen ? (
-            openIcon ? (
-              openIcon
-            ) : (
-              <FaMinus />
-            )
-          ) : closeIcon ? (
-            closeIcon
-          ) : (
-            <FaPlus />
-          )}
-        </AccordionIcon>
-      </AccordionTitle>
-      <AccordionContent isOpen={isOpen}>{children}</AccordionContent>
-    </AccordionWrapper>
+    <div className="accordion" id="accordionExample">
+      {props.data.map((item, index) => {
+        return (
+          <div className="accordion-item">
+            <AHeader className="accordion-header" id={item.title}>
+              <button
+                className="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target={`#${item.id}`}
+                aria-controls={item.id}
+                aria-expanded="true"
+              >
+                {item.title}
+              </button>
+            </AHeader>
+
+            <div
+              id={item.id}
+              // className="accordion-collapse collapse show"
+              className={`accordion-collapse collapse ${item.open && "show"}`}
+              aria-labelledby={item.title}
+              data-bs-parent="#accordionExample"
+            >
+              <div className="accordion-body">{item.body}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

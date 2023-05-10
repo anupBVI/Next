@@ -17,7 +17,9 @@ export const Nav = styled.div`
   ul {
     list-style-type:  none;
     display: flex;
+    align-items:center;
     flex-flow: row nowrap;
+    gap:20px;
     padding: 0;
     a{
         padding: 0; 

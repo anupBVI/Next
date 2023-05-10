@@ -5,8 +5,8 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    position:sticky;
-    bottom:0;
+    /* position:sticky; */
+    /* bottom:0; */
     z-index:100;
     background: #c1c1c1;
 `

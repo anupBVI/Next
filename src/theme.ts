@@ -4,6 +4,16 @@ const theme = {
     lineHeight: ['1', '1.25', '1.5', '1.75', '1.8'],
     color: {
         
+        // MATERIAL
+       whiteM : "#FAFAFA",
+       darkGrayM : "#37474F",
+       lightGrayM : "#CFD8DC",
+       greenM : " #26A69A",
+       tealGreenM : "#00838F",
+
+
+
+
         primary: '#34554A',
         secondary: '#F1E6DC',
         prominent: '#FB8C72',

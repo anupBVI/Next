@@ -85,8 +85,10 @@ const Form = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("formData", formData);
+    
+
     let isValid = validateForm();
+    console.log("formData", isValid);
     if (isValid) {
       alert("all good");
       setFormData({
@@ -94,8 +96,15 @@ const Form = () => {
         email: "",
         password: "",
       });
+    }else{
+      setErrors({
+        name : "dfadkfadfkn",
+        email : "dfadkfadfkn",
+        password : "dfadkfadfkn",
+      })
     }
   };
+
   return (
     <FormWrapper>
       <FormContainer onSubmit={handleSubmit}>

@@ -1,140 +1,210 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import * as style from "./Form.style";
 import Button from "../Button/Button";
+import { error } from "console";
+import CustomInput from "../Input/Input";
+import CustomCheckbox from "../Checkbox/Checkbox";
 const { FormWrapper, FormContainer, FormInput, Label, Input, Error } = style;
+
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  pAddress: string;
+  terms: boolean;
+}
 
 interface FormErrors {
   name?: string;
   email?: string;
   password?: string;
+  address?: string;
+  pAddress?: string;
+  terms?: string;
 }
 
+const initialFormData: FormData = {
+  name: "",
+  email: "",
+  password: "",
+  address: "",
+  pAddress: "",
+  terms: false,
+};
+
+const initialFormErrors: FormErrors = {};
+
+const validateForm = (formData: FormData) => {
+  let errors: FormErrors = {};
+
+  const passwordFormat =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/;
+
+  if (formData.name === "") {
+    errors.name = "Please enter your Name";
+  } else if (formData.name.length < 4) {
+    errors.name = "Name must be at least 4 characters long";
+  }
+  if (formData.terms === false) {
+    errors.terms = "Please agree the terms & conditions";
+  }
+
+  if (formData.email === "") {
+    errors.email = "Please enter your Email";
+  } else if (
+    !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)
+  ) {
+    errors.email = "Please enter a valid email address";
+  }
+
+  if (formData.address === "") {
+    errors.address = "Please enter your Address";
+  } else if (formData.address.length < 4) {
+    errors.name = "Address must be at least 40 characters long";
+  }
+  if (formData.pAddress === "") {
+    errors.pAddress = "Please enter your Address";
+  } else if (formData.pAddress.length < 4) {
+    errors.pAddress = "Address must be at least 40 characters long";
+  }
+
+  if (formData.password === "") {
+    errors.password = "Please enter your Password";
+  } else if (!passwordFormat.test(formData.password)) {
+    errors.password =
+      "Password must contain 1 number 1 capital and 1 small letter and a special character";
+  }
+
+  return errors;
+};
+
+const validate = (name: string, value: string) => {
+  const nameFormat = /^[a-zA-Z]+$/;
+  const passwordFormat =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/;
+
+  switch (name) {
+    case "name":
+      if (!nameFormat.test(value)) {
+        return "Name only contains letters";
+      }
+      if (value.length < 4) {
+        return "Name must be at least 4 characters long";
+      }
+      break;
+    case "email":
+      if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+        return "Please enter a valid email address";
+      }
+      break;
+
+    case "address":
+      if (value.length < 4) {
+        return "Address only contains letters";
+      }
+      if (value.length < 4) {
+        return "Name must be at least 4 characters long";
+      }
+      break;
+    case "pAddress":
+      if (value.length < 4) {
+        return "Address only contains letters";
+      }
+      if (value.length < 4) {
+        return "Name must be at least 4 characters long";
+      }
+      break;
+
+    case "password":
+      if (!passwordFormat.test(value)) {
+        return "Invalid Password";
+      }
+      break;
+    default:
+      return "";
+  }
+};
+
 const Form = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const { email, name, password } = formData;
-
-  const [errors, setErrors] = useState<FormErrors>({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const [formError, setFormError] = useState<FormErrors>({});
-
-  const validateForm = () => {
-    let err: FormErrors = {};
-    if (name === "") {
-      err.name = "Please Enter your Name Id";
-    }
-    if (email === "") {
-      err.email = "Please Enter your Email Id";
-    }
-
-    if (password === "") {
-      err.password = "Please enter your password";
-    }
-
-    setFormError({ ...err });
-
-    return Object.keys(err).length < 1;
-  };
-
-  const validate = (name: string, value: string) => {
-    const nameFormat = /^[a-zA-Z]+$/;
-    const passwordFormat =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/;
-
-    switch (name) {
-      case "name":
-        if (!nameFormat.test(value)) {
-          return "Name only contains letters";
-        }
-        if (value.length < 4) {
-          return "Name must be at least 4 characters long.";
-        } else if (!/^[a-zA-Z]+$/.test(value)) {
-          return "Name can only contain letters.";
-        }
-        break;
-      case "email":
-        if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
-          return "Please enter a valid email address.";
-        }
-        break;
-
-      case "password":
-        if (!passwordFormat.test(value)) {
-          return "Invalid Password";
-        }
-        break;
-
-      default:
-        return "";
-    }
-  };
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [formErrors, setFormErrors] = useState<FormErrors>(initialFormErrors);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: validate(name, value) });
+    const { name, value, type, checked } = e.target;
+    const inputValue = type === "checkbox" ? checked : value;
+
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: inputValue }));
+    setFormErrors((prevFormErrors) => ({
+      ...prevFormErrors,
+      [name]: validate(name, value),
+    }));
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
 
-    let isValid = validateForm();
-    console.log("formData", isValid);
-    if (isValid) {
-      alert("all good");
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-      });
-    }else{
-      setErrors({
-        name : "dfadkfadfkn",
-        email : "dfadkfadfkn",
-        password : "dfadkfadfkn",
-      })
+    const errors = validateForm(formData);
+    if (Object.keys(errors).length === 0) {
+      console.log("Form submitted successfully", formData);
+
+      setFormData(initialFormData);
+      //   setFormErrors(initialFormErrors);
+    } else {
+      setFormErrors(errors);
     }
   };
 
   return (
     <FormWrapper>
       <FormContainer onSubmit={handleSubmit}>
-        <FormInput>
-          <Label htmlFor="name">Full name</Label>
-          <Input
-            type="text"
-            value={name}
-            onChange={handleChange}
-            name="name"
-            id="name"
-          />
-          {errors.name && (
-            <Error>
-              <span>{errors.name}</span>
-            </Error>
-          )}
-        </FormInput>
+        <CustomInput
+          placeholder={"Kya hi rakhu"}
+          label="Permanent address"
+          type="text"
+          name="pAddress"
+          onChange={handleChange}
+          value={formData.pAddress}
+          error={formErrors.pAddress}
+        />
+        <CustomInput
+          placeholder={"Haa ye rakhta hu"}
+          label="Full name"
+          type="name"
+          name="name"
+          onChange={handleChange}
+          value={formData.name}
+          error={formErrors.name}
+        />
+
         <FormInput>
           <Label htmlFor="email">Email</Label>
           <Input
             type="text"
             name="email"
-            value={email}
+            value={formData.email}
             onChange={handleChange}
             id="email"
           />
-          {errors.email && (
+          {formErrors.email && (
             <Error>
-              <span>{errors.email}</span>
+              <span>{formErrors.email}</span>
+            </Error>
+          )}
+        </FormInput>
+
+        <FormInput>
+          <Label htmlFor="address">Address</Label>
+          <Input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            id="address"
+          />
+          {formErrors.address && (
+            <Error>
+              <span>{formErrors.address}</span>
             </Error>
           )}
         </FormInput>
@@ -144,19 +214,29 @@ const Form = () => {
           <Input
             type="text"
             name="password"
-            value={password}
+            value={formData.password}
             onChange={handleChange}
             id="password"
           />
-          {errors.password && (
+          {formErrors.password && (
             <Error>
-              <span>{errors.password}</span>
+              <span>{formErrors.password}</span>
             </Error>
           )}
         </FormInput>
 
+        <CustomCheckbox
+          type="checkbox"
+          name="terms"
+          id="terms"
+          onChange={handleChange}
+          checked={formData.terms}
+          label="Terms and conditions"
+          error={formErrors.terms}
+        />
+
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button primary curved label="Register" />
+          <Button type="submit" primary={true} curved={true} label="Register" />
         </div>
       </FormContainer>
     </FormWrapper>

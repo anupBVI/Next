@@ -11,13 +11,13 @@ const About = () => {
     
       
 
-      <Button lIcon={<FiArrowRight/>} primary rounded label='Click me'  />
+      <Button lIcon={<FiArrowRight/>} primary={true} rounded={true} label='Click me'  />
       { " "}
-      <Button rIcon={<FiArrowRight/>} secondary curved label='Click me'  />
+      <Button rIcon={<FiArrowRight/>} secondary={true} curved={true} label='Click me'  />
       { " "}
-      <Button lIcon={<FiArrowRight/>} tertiary rounded label='Click me'  />
+      <Button lIcon={<FiArrowRight/>} tertiary ={true} rounded ={true} label='Click me'  />
       { " "}
-      <Button lIcon={<FiArrowRight/>} danger rounded label='Click me'  />
+      <Button lIcon={<FiArrowRight/>} danger={true} rounded={true} label='Click me'  />
       { " "}
 
 

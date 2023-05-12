@@ -1,49 +1,35 @@
-import React, { ReactComponentElement } from "react";
+import React from "react";
+import Accordion from "react-bootstrap/Accordion";
+
 import * as style from "./Accordion.style";
 
-const { AHeader } = style;
+const { Header } = style;
 
 interface IAccordion {
+  defaultActive?: string;
   data: {
     id: string;
     title: string;
-    body: string | React.ReactNode
-    open?: boolean;
+    body: any;
   }[];
 }
-const Accordion = (props: IAccordion) => {
+const CustomAccordion = (props: IAccordion) => {
+  const { data, defaultActive } = props;
+  console.log("add", data);
   return (
-    <div className="accordion" id="accordionExample">
-      {props.data.map((item, index) => {
+    <Accordion
+     defaultActiveKey={`${defaultActive ? defaultActive : "1"}`}>
+      {data.map((item) => {
+        const { body, id, title } = item;
         return (
-          <div className="accordion-item">
-            <AHeader className="accordion-header" id={item.title}>
-              <button
-                className="accordion-button"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target={`#${item.id}`}
-                aria-controls={item.id}
-                aria-expanded="true"
-              >
-                {item.title}
-              </button>
-            </AHeader>
-
-            <div
-              id={item.id}
-              // className="accordion-collapse collapse show"
-              className={`accordion-collapse collapse ${item.open && "show"}`}
-              aria-labelledby={item.title}
-              data-bs-parent="#accordionExample"
-            >
-              <div className="accordion-body">{item.body}</div>
-            </div>
-          </div>
+          <Accordion.Item eventKey={id} key={id}>
+            <Header>{title}</Header>
+            <Accordion.Body>{body}</Accordion.Body>
+          </Accordion.Item>
         );
       })}
-    </div>
+    </Accordion>
   );
 };
 
-export default Accordion;
+export default CustomAccordion;

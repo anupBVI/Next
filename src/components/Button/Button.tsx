@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import * as style from "./Button.style";
 
-interface IButton {
+interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   onClick?: () => void;
-  
   lIcon?: React.ReactNode;
   rIcon?: React.ReactNode;
 
@@ -24,27 +23,42 @@ const Box = styled.div`
   width: 80%;
   justify-content: space-around;
   margin: 0px auto;
-  align-items:center;
+  align-items: center;
 
-  div{
+  div {
     display: flex;
-    align-items:center
+    align-items: center;
   }
 `;
 
 const ALLOWED_BUTTON_PROPS = ["rounded", "curved"];
 
 const Button = (props: IButton) => {
-  const { label, onClick, lIcon, rIcon, rounded, curved , primary,
+  const {
+    label,
+    onClick,
+    lIcon,
+    type,
+
+    rIcon,
+    rounded,
+    curved,
+    primary,
     secondary,
     tertiary,
-    danger } = props;
+    danger,
+  } = props;
+
   let CustomBtn = style.Button;
 
   if (
     (rounded ? 1 : 0) + (curved ? 1 : 0) > 1 ||
     (lIcon ? 1 : 0) + (rIcon ? 1 : 0) > 1 ||
-    (primary ? 1 : 0) + (secondary ? 1 : 0) + (tertiary ? 1 : 0) +  (danger ? 1 : 0) > 1 
+    (primary ? 1 : 0) +
+      (secondary ? 1 : 0) +
+      (tertiary ? 1 : 0) +
+      (danger ? 1 : 0) >
+      1
   ) {
     throw new Error(
       "Only one of the `rounded` or `curved` props can be provided."
@@ -52,7 +66,7 @@ const Button = (props: IButton) => {
   }
 
   return (
-    <CustomBtn {...props}>
+    <CustomBtn type={type} {...props}>
       <Box>
         {lIcon && (
           <>

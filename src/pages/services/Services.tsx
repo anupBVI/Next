@@ -1,6 +1,8 @@
 import { cardImage } from "@/assets";
+import CustomAccordion from "@/components/Accordion/Accordion";
 import Accordion from "@/components/Accordion/Accordion";
 import Card from "@/components/Card/Card";
+import Form from "@/components/Form/Form";
 import Grid from "@/components/Grid/Grid";
 import CustomModal from "@/components/Modal/Modal";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
@@ -11,13 +13,7 @@ import { Button, Modal } from "react-bootstrap";
 import styled from "styled-components";
 
 const Services = () => {
-  const Container = styled.div`
-    border: 1px solid transparent;
-  `;
-  const Row = styled.div``;
   const Column = styled.div``;
-
-  const cards = new Array(8).fill(null);
 
   const data = [
     {
@@ -61,33 +57,36 @@ const Services = () => {
     },
   ];
 
+  const [showAccModal, setShowaccModal] = useState(false);
+  const handleCloseAccModal = () => setShowaccModal(false);
+  const handleShowAccModal = () => setShowaccModal(true);
+
   const AData = [
     {
-      id: "one",
+      id: "1",
       title: "Accordion 1",
       body: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eumsit consequuntur a earum deserunt reicieninventore eveniet",
-      open: true,
+      // open: true,
     },
     {
-      id: "two",
+      id: "2",
       title: "Accordion 2",
       body: (
         <>
           <div>
-            <h3>Heading</h3>
             <span>
               {" "}
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi
               fuga molestias tempore.
             </span>
             <br />
-            <button onClick={() => alert("Haa")}> Sumbit </button>
+            <Button onClick={handleShowAccModal}> Sumbit </Button>
           </div>
         </>
       ),
     },
     {
-      id: "three",
+      id: "3",
       title: "Accordion 3",
       body: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim eumsit consequuntur a earum deserunt reicieninventore eveniet",
     },
@@ -100,14 +99,9 @@ const Services = () => {
   return (
     <MainLayout>
       <hr />
-
-      
-
-      <Button variant="danger" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-   
+      <Form />
+      <hr />
+      {/* <Form /> */}
 
       <hr />
 
@@ -127,22 +121,25 @@ const Services = () => {
       <hr />
 
       <br />
-      <div className="container">
-        <Accordion data={AData} />
-      </div>
 
+      <div className="container">
+        <CustomAccordion data={AData} defaultActive="2" />
+      </div>
       <br />
 
-
-
-
-
-
-
-
       <CustomModal show={show} handleClose={handleClose} haveFooter>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium sint perspiciatis similique.
-        </CustomModal>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
+        sint perspiciatis similique.
+      </CustomModal>
+
+      <CustomModal
+        header="Accordion Modal"
+        show={showAccModal}
+        handleClose={handleCloseAccModal}
+        haveFooter
+      >
+        Modal body for Accordion
+      </CustomModal>
     </MainLayout>
   );
 };

@@ -16,10 +16,10 @@ export default function Home() {
     <MainLayout>
       <div>
         
-        <Button primary label="Button" onClick={handleClick} lIcon />{" "}
-        <Button secondary rounded label="Button" onClick={handleClick} rIcon />{" "}
-        <Button tertiary curved label="no icon" onClick={handleClick} />{" "}
-        <Button danger curved label="Test " onClick={handleClick} />
+        <Button primary={true} label="Button" onClick={handleClick} lIcon />{" "}
+        <Button secondary={true} rounded={true} label="Button" onClick={handleClick} rIcon />{" "}
+        <Button tertiary={true} curved={true} label="no icon" onClick={handleClick} />{" "}
+        <Button danger={true} curved={true} label="Test " onClick={handleClick} />
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad doloribus
           explicabo hic tempore illo sed adipisci, sequi dolorem sint velit iste

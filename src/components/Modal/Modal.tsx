@@ -1,11 +1,12 @@
 import React from "react";
 import * as style from "./Modal.style";
-import { Button, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 const { ModalContainer, Header, Title, Body, Footer } = style;
 
 interface ICModal {
   show: boolean;
+  header?: string;
   handleClose: () => void;
   haveFooter?: boolean;
 }
@@ -14,12 +15,12 @@ const CustomModal = ({
   children,
   ...props
 }: { children: React.ReactNode } & ICModal) => {
-  const { handleClose, show, haveFooter } = props;
+  const { handleClose, show, haveFooter, header } = props;
 
   return (
     <ModalContainer show={show} onHide={handleClose}>
       <Header closeButton>
-        <Title>Modal heading</Title>
+        <Title> {header ? header : "Modal heading"} </Title>
       </Header>
 
       <Body>{children}</Body>

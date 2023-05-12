@@ -7,6 +7,7 @@ import Button from "../Button/Button";
 import CustomModal from "../Modal/Modal";
 
 import { Form } from "react-bootstrap";
+import useLoginModal from "../../Hooks/useLoginModal";
 
 const Navbar = () => {
   const router = useRouter();
@@ -27,16 +28,9 @@ const Navbar = () => {
 };
 
 const RightNav = ({ activeLink }: any) => {
-  const [showLogin, setShowLogin] = useState(false);
+  const { showLogin, handleLogin, handleCloseLogin } = useLoginModal();
+
   const [showSignup, setShowSignup] = useState(false);
-
-  const handleLogin = () => {
-    setShowLogin(true);
-  };
-
-  const handleCloseLogin = () => {
-    setShowLogin(false);
-  };
 
   const handleSignUp = () => {
     setShowSignup(true);
@@ -46,42 +40,62 @@ const RightNav = ({ activeLink }: any) => {
   };
   const handleRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert("form Submitting")
+    alert("form Submitting");
   };
+
+  const links = [
+    {
+      name: "Home",
+      href: "/",
+    },
+    {
+      name: "About",
+      href: "/about",
+    },
+    {
+      name: "Contact",
+      href: "/contact",
+    },
+    {
+      name: "Services",
+      href: "/services",
+    },
+    {
+      name: "News",
+      href: "/news",
+    },
+  ];
 
   return (
     <ul>
-      <Link className={activeLink === "/" ? "active" : ""} href={"/"}>
-        Home
-      </Link>
-      <Link className={activeLink === "/about" ? "active" : ""} href={"/about"}>
-        About
-      </Link>
-      <Link
-        className={activeLink === "/contact" ? "active" : ""}
-        href={"/contact"}
-      >
-        Contact
-      </Link>
-      <Link
-        className={activeLink === "/services" ? "active" : ""}
-        href={"/services"}
-      >
-        Services
-      </Link>
-      <Link className={activeLink === "/news" ? "active" : ""} href={"/news"}>
-        News
-      </Link>
+      {links.map((item) => {
+        return (
+          <Link
+            className={activeLink === `${item.href}` ? "active" : ""}
+            href={`${item.href}`}
+          >
+            {item.name}
+          </Link>
+        );
+      })}
+
       <div>
-        <Button rounded onClick={handleLogin} primary label="Login" />
+        <Button onClick={handleLogin} primary label="Login" />
+      </div>
+      <div>
+        <Button onClick={handleSignUp} tertiary label="Sign up" />
       </div>
 
-      <Button rounded onClick={handleSignUp} tertiary label="Sign up" />
-
-      <CustomModal handleClose={handleCloseLogin} show={showLogin}>
+      {/* LOGIN MODAL */}
+      <CustomModal
+        handleClose={handleCloseLogin}
+        show={showLogin}
+        header="Login header"
+      >
         Login Modal
       </CustomModal>
 
+      {/* SIGN UP MODAL */}
       <CustomModal handleClose={handleCloseSignUp} show={showSignup} haveFooter>
         <Form onSubmit={handleRegister}>
           <Form.Group className="mb-3" controlId="formBasicEmail">

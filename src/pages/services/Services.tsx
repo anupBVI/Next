@@ -4,6 +4,7 @@ import Accordion from "@/components/Accordion/Accordion";
 import Card from "@/components/Card/Card";
 import Form from "@/components/Form/Form";
 import Grid from "@/components/Grid/Grid";
+import LoginForm from "@/components/LoginForm/LoginForm";
 import CustomModal from "@/components/Modal/Modal";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import theme from "@/theme";
@@ -101,7 +102,16 @@ const Services = () => {
       <hr />
       <Form />
       <hr />
-      {/* <Form /> */}
+      
+      Login form
+
+      <LoginForm/>
+
+
+
+
+
+
 
       <hr />
 

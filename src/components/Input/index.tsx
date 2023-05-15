@@ -1,1 +1,1 @@
-export {default} from "./Input"
+export {CustomInput , CustomTextarea , CustomSelect , CustomRadio ,  CustomCheckbox} from "./Input"

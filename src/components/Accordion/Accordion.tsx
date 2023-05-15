@@ -15,7 +15,6 @@ interface IAccordion {
 }
 const CustomAccordion = (props: IAccordion) => {
   const { data, defaultActive } = props;
-  console.log("add", data);
   return (
     <Accordion
      defaultActiveKey={`${defaultActive ? defaultActive : "1"}`}>
